@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react"
+import { Dialog } from "primereact/dialog"
 import MainLayout from "../layouts/Default"
 import Container from "../components/Container"
 import {
@@ -13,10 +20,15 @@ import DataTableComponent from "../components/DataTable"
 import moment from "moment-timezone"
 import { Button } from "primereact/button"
 
-function Search() {
+interface SearchFormProps {
+  updateRes: (res: Reservation[] | null) => void
+}
+
+const SearchForm = forwardRef(({ updateRes }: SearchFormProps, ref) => {
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [room, setRoom] = useState<number>(0)
+  const [showSearch, setShowSearch] = useState<boolean>(false)
 
   const [nameItems, setNameItems] = useState<string[]>([])
   const [emailItems, setEmailItems] = useState<string[]>([])
@@ -24,9 +36,7 @@ function Search() {
 
   const [finalRes, setFinalRes] = useState<Reservation[] | null>(null)
 
-  const [filterdRes, setFilterdRes] = useState<
-    Reservation[] | Reservation | any
-  >(null)
+  const [filterdRes, setFilterdRes] = useState<Reservation[] | null>(null)
 
   const [dates, setDates] = useState<string | Date | Date[] | any>(null)
 
@@ -38,7 +48,9 @@ function Search() {
   //   new Date("5/6/2023"),
   // ]
 
-  const nameRef = useRef<HTMLInputElement>(null)
+  useImperativeHandle(ref, () => ({
+    toggleSearch: () => setShowSearch(!showSearch),
+  }))
 
   const clearForm = () => {
     setName("")
@@ -48,12 +60,22 @@ function Search() {
     setNameItems([])
     setEmailItems([])
     setRoomItems([])
+    setDisabledDates([])
     setFilterdRes(null)
-    setFinalRes(null)
+    fetchReservations()
   }
 
+  const fetchReservations = () => {
+    const res = ResService.getResMedium().then((res: any) => {
+      setFinalRes(res)
+      setFilterdRes(res)
+    })
+  }
+
+  const nameRef = useRef<HTMLInputElement>(null)
+
   const searchName = (event: AutoCompleteCompleteEvent) => {
-    let resultName: any
+    let resultName: Reservation[] | any = []
 
     console.log("name Ref", nameRef.current?.value)
 
@@ -61,13 +83,13 @@ function Search() {
       console.log("null")
 
       if (event.query === "" && name !== "") {
-        resultName = filterdRes.filter((item: any) =>
+        resultName = filterdRes.filter(item =>
           item.name.toLowerCase().includes(name.toLowerCase())
         )
         console.log("name not null")
       }
 
-      resultName = filterdRes.filter((item: any) =>
+      resultName = filterdRes.filter(item =>
         item.name.toLowerCase().includes(event.query.toLowerCase())
       )
     } else {
@@ -84,7 +106,7 @@ function Search() {
     }
 
     setFilterdRes(resultName)
-    setNameItems(resultName.map((item: any) => item.name))
+    setNameItems(resultName.map((item: Reservation) => item.name))
   }
 
   const nameDropdown = () => {
@@ -93,14 +115,14 @@ function Search() {
   const searchNameChange = (e: any) => {
     setName(e.value)
     let _name = e.value
-    let resultName: any
+    let resultName: Reservation[] | any = []
 
     console.log("name Ref", nameRef.current?.value)
 
     if (filterdRes !== null) {
       console.log("null")
 
-      resultName = filterdRes.filter((item: any) =>
+      resultName = filterdRes.filter(item =>
         item.name.toLowerCase().includes(_name.toLowerCase())
       )
     } else {
@@ -117,12 +139,12 @@ function Search() {
     }
 
     setFilterdRes(resultName)
-    setNameItems(resultName.map((item: any) => item.name))
+    setNameItems(resultName.map((item: Reservation) => item.name))
   }
 
   const searchEmail = (event: AutoCompleteCompleteEvent) => {
     if (filterdRes !== null) {
-      const resultEmail = filterdRes.filter((item: any) =>
+      const resultEmail = filterdRes.filter(item =>
         item.email.toLowerCase().includes(event.query.toLowerCase())
       )
 
@@ -130,13 +152,13 @@ function Search() {
         return
       }
 
-      setEmailItems(resultEmail.map((item: any) => item.email))
+      setEmailItems(resultEmail.map(item => item.email))
       setFilterdRes(resultEmail)
 
       return
     }
 
-    const resultEmail = ResService.getData().filter(item =>
+    const resultEmail: Reservation[] | any = ResService.getData().filter(item =>
       item.email.toLowerCase().includes(event.query.toLowerCase())
     )
 
@@ -145,12 +167,12 @@ function Search() {
     }
 
     setFilterdRes(resultEmail)
-    setEmailItems(resultEmail.map(item => item.email))
+    setEmailItems(resultEmail.map((item: Reservation) => item.email))
   }
 
   const searchRoom = (event: AutoCompleteCompleteEvent) => {
     if (filterdRes !== null) {
-      const resultRoom = filterdRes.filter((item: any) =>
+      const resultRoom = filterdRes.filter(item =>
         item.roomNumber.toString().includes(event.query)
       )
 
@@ -159,11 +181,11 @@ function Search() {
       }
 
       setFilterdRes(resultRoom)
-      setRoomItems(resultRoom.map((item: any) => item.roomNumber))
+      setRoomItems(resultRoom.map(item => item.roomNumber))
       return
     }
 
-    const resultRoom = ResService.getData().filter(item =>
+    const resultRoom: Reservation[] | any = ResService.getData().filter(item =>
       item.roomNumber.toString().includes(event.query)
     )
 
@@ -172,7 +194,7 @@ function Search() {
     }
 
     setFilterdRes(resultRoom)
-    setRoomItems(resultRoom.map(item => item.roomNumber))
+    setRoomItems(resultRoom.map((item: Reservation) => item.roomNumber))
   }
 
   const handleDate = (e: any) => {
@@ -184,7 +206,7 @@ function Search() {
 
     if (filterdRes !== null) {
       const result = filterdRes.filter(
-        (item: any) =>
+        item =>
           moment(item.checkin).format("MM/DD/YYYY") === formatted ||
           moment(item.checkout).format("MM/DD/YYYY") === formatted
       )
@@ -197,7 +219,7 @@ function Search() {
       return
     }
 
-    const result = ResService.getData().filter(
+    const result: any = ResService.getData().filter(
       item =>
         moment(item.checkin).format("MM/DD/YYYY") === formatted ||
         moment(item.checkout).format("MM/DD/YYYY") === formatted
@@ -213,20 +235,19 @@ function Search() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (filterdRes === null) {
-      ResService.getResMedium().then((res: any) => {
-        setFinalRes(res)
-      })
-      return
-    }
-
-    setFinalRes(filterdRes)
+    // setFinalRes(filterdRes)
+    updateRes(filterdRes)
+    setShowSearch(false)
   }
   return (
-    <MainLayout>
-      <Container>
-        <div className="flex flex-col items-center justify-center h-96">
-          <h1 className="mb-4 text-xl font-semibold">Search Form</h1>
+    <div>
+      <Dialog
+        header="Search Form"
+        visible={showSearch}
+        style={{ width: "30vw" }}
+        onHide={() => setShowSearch(false)}
+      >
+        <p className="m-0">
           <form onSubmit={handleSubmit} className="flex flex-column gap-2">
             <div className="flex gap-2">
               <div className="flex flex-column gap-2">
@@ -277,19 +298,18 @@ function Search() {
                 />
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button type="submit" label="Search" />
-              <Button label="Reset" onClick={clearForm} outlined />
+            <div className="flex">
+              {/* <button className={buttonClass}>Search</button>
+              <button className={buttonClass}>Clear</button> */}
+
+              <Button label="Search" className="mr-2" />
+              <Button label="Clear" onClick={clearForm} outlined />
             </div>
           </form>
-        </div>
-      </Container>
-
-      <Container>
-        {finalRes && <DataTableComponent resData={finalRes} />}
-      </Container>
-    </MainLayout>
+        </p>
+      </Dialog>
+    </div>
   )
-}
+})
 
-export default Search
+export default SearchForm

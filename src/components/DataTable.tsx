@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, FormEvent } from "react"
 import { FilterMatchMode } from "primereact/api"
 import { DataTable } from "primereact/datatable"
 import { Column, ColumnFilterElementTemplateOptions } from "primereact/column"
@@ -9,6 +9,14 @@ import { MultiSelect, MultiSelectChangeEvent } from "primereact/multiselect"
 import { Dialog } from "primereact/dialog"
 import { Document, Page } from "react-pdf/dist/esm/entry.vite"
 import type { PDFDocumentProxy } from "pdfjs-dist"
+import { Reservation, AgentOption } from "../interfaces/reservation"
+import { Calendar, CalendarChangeEvent } from "primereact/calendar"
+import {
+  AutoComplete,
+  AutoCompleteCompleteEvent,
+} from "primereact/autocomplete"
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog"
+import { Toast } from "primereact/toast"
 
 const options = {
   cMapUrl: "cmaps/",
@@ -17,19 +25,11 @@ const options = {
 
 type PDFFile = string | File | null
 
-interface Reservation {
-  id: number
-  name: string
-  email: string
-  roomNumber: number
-  checkin: string
-  checkout: string
-  price: string
-  status: string
-  agent: string
-}
-
-export default function DataTableComponent() {
+export default function DataTableComponent({
+  resData,
+}: {
+  resData: Reservation[]
+}) {
   const [res, setRes] = useState<Reservation[] | any>(null)
   const [selectedRes, setSelectedRes] = useState<Reservation | null>(null)
   const [filters, setFilters] = useState<any | null>({
@@ -40,10 +40,34 @@ export default function DataTableComponent() {
 
   const [visible, setVisible] = useState<boolean>(false)
   const [detail, setDetail] = useState<boolean>(false)
-  const [agents] = useState(["agent1", "agent2", "agent3"])
+  const [edit, setEdit] = useState<boolean>(false)
+  const [agents] = useState<AgentOption[]>([
+    { name: "Amy Elsner", image: "amyelsner.png" },
+    { name: "Anna Fali", image: "annafali.png" },
+    { name: "Asiya Javayant", image: "asiyajavayant.png" },
+  ])
   const dt = useRef<any>(null)
   const [file, setFile] = useState<PDFFile>("./res.pdf")
   const [numPages, setNumPages] = useState<number>()
+
+  // Edit variables
+  const [editName, setEditName] = useState<string>("")
+  const [editEmail, setEditEmail] = useState<string>("")
+  const [editRoom, setEditRoom] = useState<number>(0)
+  const [editDates, setEditDates] = useState<Date | Date[] | any>(null)
+  const [suggestRoomNumbers, setSuggestRoomNumbers] = useState<number[]>([])
+  const deleteToast = useRef<Toast>(null)
+
+  const searchRoomNumbers = (event: AutoCompleteCompleteEvent) => {
+    setTimeout(() => {
+      let results: number[] = []
+      for (let i = 0; i < 10; i++) {
+        results.push(+event.query + i)
+      }
+
+      setSuggestRoomNumbers(results)
+    }, 250)
+  }
 
   function onFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { files } = event.target
@@ -53,28 +77,99 @@ export default function DataTableComponent() {
     }
   }
 
+  const accept = () => {
+    const updatedRes = res.filter(
+      (res: Reservation) => res.id !== selectedRes?.id
+    )
+    setRes(updatedRes)
+
+    deleteToast.current?.show({
+      severity: "error",
+      summary: "Confirmed",
+      detail: "Deleted Successfully",
+      life: 3000,
+    })
+  }
+
+  const reject = () => {
+    deleteToast.current?.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    })
+  }
+
+  const handleDelete = (rowData: Reservation) => {
+    setSelectedRes(rowData)
+    confirmDialog({
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      acceptClassName: "p-button-danger",
+      accept,
+      reject,
+    })
+    // const updatedRes = res.filter((res: Reservation) => res.id !== rowData.id)
+    // setRes(updatedRes)
+  }
+
+  const handleEditSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const editedRes = {
+      ...selectedRes,
+      name: editName,
+      email: editEmail,
+      roomNumber: editRoom,
+      checkin: editDates[0]?.toLocaleDateString(),
+      checkout: editDates[1]?.toLocaleDateString(),
+    }
+
+    const updatedRes = res.map((res: Reservation) =>
+      res.id === editedRes.id ? editedRes : res
+    )
+
+    setRes(updatedRes)
+
+    setEdit(false)
+    clearEditForm()
+  }
+
+  const handleEditButtonClick = (rowData: Reservation) => {
+    setEditName(rowData.name)
+    setEditEmail(rowData.email)
+    setEditRoom(rowData.roomNumber)
+    setEditDates([new Date(rowData.checkin), new Date(rowData.checkout)])
+    setEdit(true)
+  }
+
+  const clearEditForm = () => {
+    setEditName("")
+    setEditEmail("")
+    setEditRoom(0)
+    setEditDates([])
+  }
+
   function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy) {
     setNumPages(nextNumPages)
   }
 
-  // const cols = [
-  //   { field: "id", header: "Id" },
-  //   { field: "name", header: "Name" },
-  //   { field: "email", header: "Email" },
-  //   { field: "roomNumber", header: "Room Number" },
-  //   { field: "checkin", header: "Check In" },
-  //   { field: "checkout", header: "Check Out" },
-  //   { field: "price", header: "Price" },
-  //   { field: "status", header: "Status" },
-  //   { field: "agent", header: "Agent" },
-  // ]
-  // const exportColumns = cols.map(col => ({
-  //   title: col.header,
-  //   dataKey: col.field,
-  // }))
-
   const clearFilter = () => {
     initFilters()
+  }
+
+  const agentBodyTemplate = (rowData: Reservation) => {
+    return (
+      <div className="flex align-items-center gap-2">
+        <img
+          alt={rowData.agent.name}
+          src={`https://primefaces.org/cdn/primereact/images/avatar/${rowData.agent.image}`}
+          width="32"
+        />
+        <span>{rowData.agent.name}</span>
+      </div>
+    )
   }
 
   const agentFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
@@ -83,21 +178,37 @@ export default function DataTableComponent() {
         value={options.value}
         options={agents}
         itemTemplate={agentsItemTemplate}
-        onChange={(e: MultiSelectChangeEvent) => {
-          console.log(e.value)
-          return options.filterCallback(e.value)
-        }}
+        onChange={(e: MultiSelectChangeEvent) =>
+          options.filterCallback(e.value)
+        }
+        optionLabel="name"
         placeholder="Any"
         className="p-column-filter"
       />
     )
   }
 
+  const agentsItemTemplate = (option: AgentOption) => {
+    return (
+      <div className="flex align-items-center gap-2">
+        <img
+          alt={option.name}
+          src={`https://primefaces.org/cdn/primereact/images/avatar/${option.image}`}
+          width="32"
+        />
+        <span>{option.name}</span>
+      </div>
+    )
+  }
+
   const actionBodyTemplate = (rowData: Reservation) => {
     return (
       <div className="flex align-items-center gap-2">
-        <i className="pi pi-pencil"></i>
-        <i className="pi pi-trash"></i>
+        <i
+          className="pi pi-pencil"
+          onClick={() => handleEditButtonClick(rowData)}
+        ></i>
+        <i className="pi pi-trash" onClick={() => handleDelete(rowData)}></i>
         {rowData.status === "canceled" && <i className="pi pi-link"></i>}
       </div>
     )
@@ -118,17 +229,13 @@ export default function DataTableComponent() {
     )
   }
 
-  const agentsItemTemplate = (option: string) => {
-    return (
-      <div className="flex align-items-center gap-2">
-        <span>{option}</span>
-      </div>
-    )
-  }
-
   useEffect(() => {
-    ResService.getResMedium().then(data => setRes(data))
-  }, [])
+    if (resData) {
+      setRes(resData)
+    } else {
+      ResService.getResMedium().then(data => setRes(data))
+    }
+  }, [resData])
 
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -230,6 +337,8 @@ export default function DataTableComponent() {
 
   return (
     <div className="card">
+      <Toast ref={deleteToast} />
+      <ConfirmDialog />
       <Dialog
         header="Document"
         visible={visible}
@@ -250,7 +359,7 @@ export default function DataTableComponent() {
       <Dialog
         header="Details"
         visible={detail}
-        style={{ width: "50vw" }}
+        style={{ width: "30vw" }}
         onHide={() => setDetail(false)}
       >
         Name: {selectedRes?.name}
@@ -267,7 +376,7 @@ export default function DataTableComponent() {
         <br />
         Status: {selectedRes?.status}
         <br />
-        Agent: {selectedRes?.agent}
+        Agent: {selectedRes?.agent.name}
         <br />
         <br />
         <Button
@@ -277,6 +386,66 @@ export default function DataTableComponent() {
           className="p-button-danger"
           onClick={() => setDetail(false)}
         />
+      </Dialog>
+
+      <Dialog
+        header="Edit Reservation"
+        visible={edit}
+        style={{ width: "30vw" }}
+        onHide={() => setEdit(false)}
+      >
+        <form onSubmit={handleEditSubmit} className="flex flex-column gap-2">
+          <div className="flex gap-2">
+            <div className="flex flex-column gap-2">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={editName}
+                onChange={e => setEditName(e.target.value)}
+                className="p-inputtext p-component p-filled"
+              />
+            </div>
+            <div className="flex flex-column gap-2">
+              <label htmlFor="name">email</label>
+              <input
+                type="text"
+                name="email"
+                value={editEmail}
+                onChange={e => setEditEmail(e.target.value)}
+                id="name"
+                className="p-inputtext p-component p-filled"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <div className="flex flex-column gap-2">
+              <label htmlFor="name">Room</label>
+              <AutoComplete
+                value={editRoom}
+                suggestions={suggestRoomNumbers}
+                completeMethod={searchRoomNumbers}
+                onChange={e => setEditRoom(e.value)}
+              />
+            </div>
+
+            <div className="flex flex-column gap-2">
+              <label>Select Date</label>
+              <Calendar
+                value={editDates}
+                onChange={(e: any) => setEditDates(e.value)}
+                selectionMode="range"
+                readOnlyInput
+              />
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button type="submit" label="Submit" />
+            <Button label="Clear" outlined onClick={clearEditForm} />
+          </div>
+        </form>
       </Dialog>
       <DataTable
         value={res}
@@ -346,11 +515,11 @@ export default function DataTableComponent() {
         />
         <Column
           header="Agent"
-          field="agent"
           filterField="agent"
           showFilterMatchModes={false}
           filterMenuStyle={{ width: "14rem" }}
-          style={{ minWidth: "4rem" }}
+          style={{ minWidth: "14rem" }}
+          body={agentBodyTemplate}
           filter
           filterElement={agentFilterTemplate}
         />

@@ -10,7 +10,7 @@ export const ResService = {
         checkout: "7/12/2022",
         price: "$63.89",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 2,
@@ -21,7 +21,7 @@ export const ResService = {
         checkout: "8/7/2022",
         price: "$82.85",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 3,
@@ -32,7 +32,7 @@ export const ResService = {
         checkout: "12/8/2022",
         price: "$61.64",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 4,
@@ -54,7 +54,7 @@ export const ResService = {
         checkout: "5/30/2022",
         price: "$63.98",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 6,
@@ -65,7 +65,7 @@ export const ResService = {
         checkout: "12/28/2022",
         price: "$99.43",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 7,
@@ -76,7 +76,7 @@ export const ResService = {
         checkout: "11/25/2022",
         price: "$40.12",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 8,
@@ -87,7 +87,7 @@ export const ResService = {
         checkout: "11/16/2022",
         price: "$62.97",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 9,
@@ -109,7 +109,7 @@ export const ResService = {
         checkout: "1/1/2023",
         price: "$37.17",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 11,
@@ -120,7 +120,7 @@ export const ResService = {
         checkout: "3/29/2023",
         price: "$71.24",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 12,
@@ -131,7 +131,7 @@ export const ResService = {
         checkout: "11/19/2022",
         price: "$62.24",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 13,
@@ -142,7 +142,7 @@ export const ResService = {
         checkout: "8/10/2022",
         price: "$14.46",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 14,
@@ -153,7 +153,7 @@ export const ResService = {
         checkout: "10/6/2022",
         price: "$39.44",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 15,
@@ -175,7 +175,7 @@ export const ResService = {
         checkout: "8/29/2022",
         price: "$55.20",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 17,
@@ -186,7 +186,7 @@ export const ResService = {
         checkout: "3/1/2023",
         price: "$64.21",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 18,
@@ -219,7 +219,7 @@ export const ResService = {
         checkout: "8/17/2022",
         price: "$10.36",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 21,
@@ -230,7 +230,7 @@ export const ResService = {
         checkout: "7/2/2022",
         price: "$25.16",
         status: "checkedout",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 22,
@@ -241,7 +241,7 @@ export const ResService = {
         checkout: "8/19/2022",
         price: "$56.79",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 23,
@@ -252,7 +252,7 @@ export const ResService = {
         checkout: "6/2/2022",
         price: "$94.07",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 24,
@@ -263,7 +263,7 @@ export const ResService = {
         checkout: "9/14/2022",
         price: "$90.79",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 25,
@@ -274,7 +274,7 @@ export const ResService = {
         checkout: "1/14/2023",
         price: "$2.13",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 26,
@@ -285,7 +285,7 @@ export const ResService = {
         checkout: "3/24/2023",
         price: "$50.70",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 27,
@@ -296,7 +296,7 @@ export const ResService = {
         checkout: "8/13/2022",
         price: "$16.33",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 28,
@@ -307,7 +307,7 @@ export const ResService = {
         checkout: "11/13/2022",
         price: "$36.83",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 29,
@@ -318,7 +318,7 @@ export const ResService = {
         checkout: "5/6/2022",
         price: "$30.15",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 30,
@@ -340,7 +340,7 @@ export const ResService = {
         checkout: "6/12/2022",
         price: "$95.47",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 32,
@@ -351,7 +351,7 @@ export const ResService = {
         checkout: "5/6/2022",
         price: "$38.28",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 33,
@@ -362,7 +362,7 @@ export const ResService = {
         checkout: "6/16/2022",
         price: "$69.89",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 34,
@@ -373,7 +373,7 @@ export const ResService = {
         checkout: "1/4/2023",
         price: "$16.66",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 35,
@@ -395,7 +395,7 @@ export const ResService = {
         checkout: "4/16/2023",
         price: "$43.21",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 37,
@@ -406,7 +406,7 @@ export const ResService = {
         checkout: "10/4/2022",
         price: "$33.76",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 38,
@@ -417,7 +417,7 @@ export const ResService = {
         checkout: "10/25/2022",
         price: "$75.81",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 39,
@@ -439,7 +439,7 @@ export const ResService = {
         checkout: "5/16/2022",
         price: "$72.33",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 41,
@@ -450,7 +450,7 @@ export const ResService = {
         checkout: "4/12/2023",
         price: "$37.60",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 42,
@@ -461,7 +461,7 @@ export const ResService = {
         checkout: "7/6/2022",
         price: "$23.79",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 43,
@@ -472,7 +472,7 @@ export const ResService = {
         checkout: "5/19/2022",
         price: "$1.68",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 44,
@@ -483,7 +483,7 @@ export const ResService = {
         checkout: "5/17/2022",
         price: "$61.00",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 45,
@@ -494,7 +494,7 @@ export const ResService = {
         checkout: "6/27/2022",
         price: "$65.53",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 46,
@@ -549,7 +549,7 @@ export const ResService = {
         checkout: "4/17/2023",
         price: "$14.32",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 51,
@@ -560,7 +560,7 @@ export const ResService = {
         checkout: "2/17/2023",
         price: "$73.27",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 52,
@@ -571,7 +571,7 @@ export const ResService = {
         checkout: "11/27/2022",
         price: "$97.40",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 53,
@@ -582,7 +582,7 @@ export const ResService = {
         checkout: "7/30/2022",
         price: "$29.59",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 54,
@@ -604,7 +604,7 @@ export const ResService = {
         checkout: "12/20/2022",
         price: "$82.09",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 56,
@@ -626,7 +626,7 @@ export const ResService = {
         checkout: "2/28/2023",
         price: "$44.72",
         status: "checkedout",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 58,
@@ -637,7 +637,7 @@ export const ResService = {
         checkout: "3/12/2023",
         price: "$91.47",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 59,
@@ -659,7 +659,7 @@ export const ResService = {
         checkout: "7/17/2022",
         price: "$76.70",
         status: "checkedout",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 61,
@@ -670,7 +670,7 @@ export const ResService = {
         checkout: "12/20/2022",
         price: "$12.10",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 62,
@@ -692,7 +692,7 @@ export const ResService = {
         checkout: "3/15/2023",
         price: "$93.05",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 64,
@@ -703,7 +703,7 @@ export const ResService = {
         checkout: "5/14/2022",
         price: "$62.41",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 65,
@@ -714,7 +714,7 @@ export const ResService = {
         checkout: "4/11/2023",
         price: "$37.85",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 66,
@@ -736,7 +736,7 @@ export const ResService = {
         checkout: "11/1/2022",
         price: "$54.00",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 68,
@@ -758,7 +758,7 @@ export const ResService = {
         checkout: "6/21/2022",
         price: "$63.78",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 70,
@@ -769,7 +769,7 @@ export const ResService = {
         checkout: "3/9/2023",
         price: "$89.20",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 71,
@@ -780,7 +780,7 @@ export const ResService = {
         checkout: "6/30/2022",
         price: "$9.38",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 72,
@@ -791,7 +791,7 @@ export const ResService = {
         checkout: "7/18/2022",
         price: "$16.45",
         status: "canceled",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 73,
@@ -813,7 +813,7 @@ export const ResService = {
         checkout: "12/29/2022",
         price: "$10.04",
         status: "checkedout",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 75,
@@ -824,7 +824,7 @@ export const ResService = {
         checkout: "2/1/2023",
         price: "$93.85",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 76,
@@ -835,7 +835,7 @@ export const ResService = {
         checkout: "6/5/2022",
         price: "$22.35",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 77,
@@ -846,7 +846,7 @@ export const ResService = {
         checkout: "7/21/2022",
         price: "$36.02",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 78,
@@ -868,7 +868,7 @@ export const ResService = {
         checkout: "1/5/2023",
         price: "$83.34",
         status: "checkedout",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 80,
@@ -879,7 +879,7 @@ export const ResService = {
         checkout: "11/26/2022",
         price: "$96.55",
         status: "checkedout",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 81,
@@ -912,7 +912,7 @@ export const ResService = {
         checkout: "6/27/2022",
         price: "$94.76",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 84,
@@ -934,7 +934,7 @@ export const ResService = {
         checkout: "6/21/2022",
         price: "$50.47",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 86,
@@ -945,7 +945,7 @@ export const ResService = {
         checkout: "8/21/2022",
         price: "$82.17",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 87,
@@ -967,7 +967,7 @@ export const ResService = {
         checkout: "5/1/2022",
         price: "$33.61",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 89,
@@ -978,7 +978,7 @@ export const ResService = {
         checkout: "6/11/2022",
         price: "$18.96",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 90,
@@ -989,7 +989,7 @@ export const ResService = {
         checkout: "11/12/2022",
         price: "$45.51",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 91,
@@ -1000,7 +1000,7 @@ export const ResService = {
         checkout: "10/2/2022",
         price: "$62.44",
         status: "canceled",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 92,
@@ -1022,7 +1022,7 @@ export const ResService = {
         checkout: "11/21/2022",
         price: "$7.95",
         status: "checkedin",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 94,
@@ -1055,7 +1055,7 @@ export const ResService = {
         checkout: "4/2/2023",
         price: "$41.75",
         status: "checkedin",
-        agent: "agent2",
+        agent: { name: "Anna Fali", image: "annafali.png" },
       },
       {
         id: 97,
@@ -1066,7 +1066,7 @@ export const ResService = {
         checkout: "11/6/2022",
         price: "$73.13",
         status: "checkedin",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 98,
@@ -1077,7 +1077,7 @@ export const ResService = {
         checkout: "2/8/2023",
         price: "$48.10",
         status: "canceled",
-        agent: "agent3",
+        agent: { name: "Asiya Javayant", image: "asiyajavayant.png" },
       },
       {
         id: 99,
@@ -1088,7 +1088,7 @@ export const ResService = {
         checkout: "6/14/2022",
         price: "$63.77",
         status: "checkedout",
-        agent: "agent1",
+        agent: { name: "Amy Elsner", image: "amyelsner.png" },
       },
       {
         id: 100,

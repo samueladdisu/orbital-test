@@ -7,6 +7,7 @@ import { Calendar, CalendarChangeEvent } from "primereact/calendar"
 import MainLayout from "../layouts/Default"
 import { useState } from "react"
 import { buttonClass } from "../config"
+import { Button } from "primereact/button"
 
 function AddRes() {
   const [value, setValue] = useState<string>("")
@@ -69,7 +70,7 @@ function AddRes() {
               </div>
             </div>
             <div className="flex">
-              <button className={buttonClass}>Submit</button>
+              <Button label="Submit" />
             </div>
           </form>
         </div>
